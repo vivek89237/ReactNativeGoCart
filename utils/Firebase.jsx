@@ -1,4 +1,5 @@
-import {firestore} from "./firebase";
+import {firestore} from "./firebaseConfig.ts";
+import {ToastAndroid} from 'react-native';
 import { 
     addDoc, 
     collection, 
@@ -11,20 +12,21 @@ import {
     deleteDoc 
 } from 'firebase/firestore';
 
-let vehicleRef = collection(firestore, "posts");
+let vendorRef = collection(firestore, "vendor");
+let customerRef = collection(firestore, "customer");
 
-export const uploadVehicleInfo =(object)=>{
-    addDoc(postRef, object)
-    .then((res) => {
-        toast.success('Document has been uploaded.');
-    })
-    .catch((err) =>{
-        toast.error(err);
-    })
-}
+// export const uploadVehicleInfo =(object)=>{
+//     addDoc(postRef, object)
+//     .then((res) => {
+//         toast.success('Document has been uploaded.');
+//     })
+//     .catch((err) =>{
+//         toast.error(err);
+//     })
+// }
 
 export const getVehicleInfo = (setAllStatus) =>{
-    onSnapshot(postRef, response =>{
+    onSnapshot(vendorRef, response =>{
         setAllStatus(response.docs.map((docs)=>{
             return {...docs.data(), id: docs.id}
         }))
@@ -34,14 +36,26 @@ export const getVehicleInfo = (setAllStatus) =>{
     })
 }
 
-export const updateVehicleInfo =(id, location)=>{
-    let postToEdit = doc(postRef, id);
-    updateDoc(postToEdit, {location})
+export const getCustomer = (setAllStatus) =>{
+    onSnapshot(customerRef, response =>{
+        setAllStatus(response.docs.map((docs)=>{
+            return {...docs.data(), id: docs.id}
+        }))
+        // console.log(response.docs.map((docs)=>{
+        //     return {...docs.data(), id: docs.id}
+        // }));
+    })
+}
+
+
+export const updateVehicleInfo =(id, latitude, longitude)=>{
+    let postToEdit = doc(vendorRef, id);
+    updateDoc(postToEdit, {latitude: latitude, longitude: longitude})
     .then((res) => {
-        toast.success('Post has been updated.');
+        ToastAndroid.show('A pikachu appeared nearby !', ToastAndroid.SHORT);
     })
     .catch((err) =>{
-        toast.error(err);
+        ToastAndroid.show('Error', ToastAndroid.SHORT);
     })
 }
 

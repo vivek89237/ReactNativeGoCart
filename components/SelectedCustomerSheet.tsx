@@ -1,26 +1,24 @@
 import BottomSheet , {BottomSheetView } from '@gorhom/bottom-sheet';
 import { Text , Image, View} from'react-native';
 import { Button } from './Button';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {useScooter} from "~/provider/ScooterProvider";
-import MERA_THELA from "~/assets/MERA_THELA.jpeg"
+import MERA_THELA from "~/assets/customerLogo.png"
 import { FontAwesome6 } from '@expo/vector-icons';
 
-export default function SelectedScooterSheet(){
-    
-    const {selectedScooter, isNearby, routeTime, routeDistance} = useScooter();
+export default function SeletedCustomerSheet({selectedCustomer, isNearby, routeTime, routeDistance}){
 
     const bottomSheetRef = useRef<BottomSheet>(null);
 
     useEffect(()=>{
-        if(selectedScooter){
-            bottomSheetRef.current?.expand();
-        }
-    }, [selectedScooter])
-
+        bottomSheetRef.current?.expand();
+    })
+    // const onDelivered=()={
+    //     // change status of order
+    // }
     return (
     <>
-     {selectedScooter && <BottomSheet 
+     {<BottomSheet 
         ref={bottomSheetRef} 
         index={-1} 
         snapPoints={[200]}  
@@ -31,8 +29,8 @@ export default function SelectedScooterSheet(){
         <View style={{flexDirection:"row", alignItems:"center",  gap:10}}>
             <Image source={MERA_THELA} style={{width: 60, height: 60}} />
             <View style={{flex:1, gap:5}}>
-                <Text style={{color:"white", fontSize:20, fontWeight:'600'}} >{selectedScooter.name}</Text>
-                <Text style={{color:"gray", fontSize:15}} >{selectedScooter.id}</Text>
+                <Text style={{color:"white", fontSize:20, fontWeight:'600'}} >{selectedCustomer?.name}</Text>
+                <Text style={{color:"gray", fontSize:15}} >{selectedCustomer?.id}</Text>
             </View>
             <View style={{gap:8}}>
                 <View style ={{flexDirection:"row", alignItems:"center", gap: 5, alignSelf:'flex-start'}}>
@@ -47,7 +45,14 @@ export default function SelectedScooterSheet(){
             
         </View>
         <View style={{flex:1, padding:20}}>
-            {!isNearby ? <Button title='Order Now' style={{backgroundColor:"#42E100"}}/> :  <Button title='Out of Service' style={{backgroundColor:"#414442"}}/>}
+          {/* {!isNearby ? <Button title='Delivered' style={{backgroundColor:"red"}}
+          /> : <Button title='Delivered' style={{backgroundColor:"#42E100"}}/>} */}
+            <Button 
+            title='Delivered' 
+            style={{backgroundColor:"#42E100"}}
+            //onPress={onDelivered}
+            />
+
         </View>
         </BottomSheetView>
     </BottomSheet>}

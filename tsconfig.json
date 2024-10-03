@@ -8,5 +8,5 @@
       "~/*": ["*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "components/UserLocation.jsx"]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "components/UserLocation.jsx", "utils/AsyncStorage.js"]
 }

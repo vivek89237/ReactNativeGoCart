@@ -8,9 +8,7 @@ export default function ScooterProvider ({children} : PropsWithChildren) {
     const [direction, setDirection] = useState({});
     const [selectedScooter, setSelectedScooter] = useState({});
     const [isNearby, setIsNearby] = useState(false);
-
-
-    console.log("selected: ", selectedScooter);
+  
 
     useEffect(()=>{
       const fetchDircections = async ()=>{
